@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('sexe');
             $table->string('planet');
             $table->string('description');
-            $table->string('superpowers');
+            $table->string('superpowers')->nullable();
             $table->string('protectedcountry');
-            $table->string('gadjets');
-            $table->string('team');
-            $table->string('car');
+            $table->string('gadjets')->nullable();
+            $table->string('team')->nullable();
+            $table->string('car')->nullable();
             $table->timestamps();
         });
     }
