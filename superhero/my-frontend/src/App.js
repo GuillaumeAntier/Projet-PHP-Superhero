@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { fetchData } from "./Api"; // Assure-toi d'importer ton API
 
-function App() {
+const SuperheroesList = () => {
+  const [heroes, setHeroes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getHeroes = async () => {
+      try {
+        const result = await fetchData("/superhero");
+        console.log("Données reçues :", result);
+        setHeroes(result); // Stocke les données
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getHeroes();
+  }, []);
+
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p>Erreur : {error}</p>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Liste des Super-Héros</h1>
+      <ul>
+        {heroes.map((hero) => (
+          <li key={hero.id}>
+            <strong>{hero.heroname}</strong> - {hero.realname} ({hero.planet})
+            <br />
+            <em>{hero.description}</em>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
-export default App;
+export default SuperheroesList;
