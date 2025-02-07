@@ -15,22 +15,6 @@ class superheroController extends Controller
 
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        $superhero = new superhero();
-        $superhero->heroname = $request->heroname;
-        $superhero->realname = $request->realname;
-        $superhero->sexe = $request->sexe;
-        $superhero->planet = $request->planet;
-        $superhero->description = $request->description;
-        $superhero->superpowers = $request->superpowers;
-        $superhero->protectedcountry = $request->protectedcountry;
-        $superhero->gadjets = $request->gadjets;
-        $superhero->team = $request->team;
-        $superhero->car = $request->car;
-        return response()->json([
-            'message' => 'Superhero created'
-        ], 201);
-=======
         $request->validate([
             'heroname' => 'required|string|max:255',
             'realname' => 'nullable|string|max:255',
@@ -47,7 +31,6 @@ class superheroController extends Controller
         $hero = Superhero::create($request->all());
     
         return response()->json($hero, 201);
->>>>>>> godwin
     }
 
     public function show($id)
@@ -100,8 +83,4 @@ class superheroController extends Controller
             ], 404);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> godwin
