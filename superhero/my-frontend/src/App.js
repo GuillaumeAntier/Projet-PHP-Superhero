@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import AddHero from "./AddHero";
-import HeroDetail from "./HeroDetail";
+import AddHero from "./AddHero"; 
 
 const SuperheroesList = () => {
   const [heroes, setHeroes] = useState([]);
@@ -39,15 +37,4 @@ const SuperheroesList = () => {
   );
 };
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SuperheroesList />} />
-        <Route path="/hero/:id" element={<HeroDetail />} /> {/* Ajout de la route pour HeroDetail */}
-      </Routes>
-    </Router>
-  );
-};
-
-export default App;
+export default SuperheroesList;

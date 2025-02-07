@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Superpower extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
+        'name',
+        'description',
     ];
 
     public function superheroes()
     {
-        return $this->hasMany(Superhero::class);
+        return $this->belongsToMany(Superhero::class, 'superhero_superpower');
     }
 }
