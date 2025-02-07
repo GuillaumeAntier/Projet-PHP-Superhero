@@ -15,20 +15,22 @@ class superheroController extends Controller
 
     public function store(Request $request)
     {
-        $superhero = new superhero();
-        $superhero->heroname = $request->heroname;
-        $superhero->realname = $request->realname;
-        $superhero->sexe = $request->sexe;
-        $superhero->planet = $request->planet;
-        $superhero->description = $request->description;
-        $superhero->superpowers = $request->superpowers;
-        $superhero->protectedcountry = $request->protectedcountry;
-        $superhero->gadjets = $request->gadjets;
-        $superhero->team = $request->team;
-        $superhero->car = $request->car;
-        return response()->json([
-            'message' => 'Superhero created'
-        ], 201);
+        $request->validate([
+            'heroname' => 'required|string|max:255',
+            'realname' => 'nullable|string|max:255',
+            'sexe' => 'nullable|string',
+            'planet' => 'nullable|string',
+            'description' => 'nullable|string',
+            'superpowers' => 'nullable|string',
+            'protectedcountry' => 'nullable|string',
+            'gadjets' => 'nullable|string',
+            'team' => 'nullable|string',
+            'car' => 'nullable|string',
+        ]);
+    
+        $hero = Superhero::create($request->all());
+    
+        return response()->json($hero, 201);
     }
 
     public function show($id)

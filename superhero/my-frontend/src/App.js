@@ -1,29 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { fetchData } from "./Api"; // Assure-toi d'importer ton API
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import AddHero from "./AddHero";
+import HeroDetail from "./HeroDetail";
 
 const SuperheroesList = () => {
   const [heroes, setHeroes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getHeroes = async () => {
       try {
-        const result = await fetchData("/superhero");
-        console.log("Données reçues :", result);
-        setHeroes(result); // Stocke les données
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        const response = await axios.get("http://127.0.0.1:8000/api/superhero");
+        setHeroes(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des super-héros:", error);
       }
     };
 
     getHeroes();
   }, []);
-
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p>Erreur : {error}</p>;
 
   return (
     <div>
@@ -31,14 +26,28 @@ const SuperheroesList = () => {
       <ul>
         {heroes.map((hero) => (
           <li key={hero.id}>
-            <strong>{hero.heroname}</strong> - {hero.realname} ({hero.planet})
+            <Link to={`/hero/${hero.id}`}>
+              <span className="hero-name">{hero.heroname}</span>
+            </Link>
             <br />
             <em>{hero.description}</em>
           </li>
         ))}
       </ul>
+      <AddHero setHeroes={setHeroes} />
     </div>
   );
 };
 
-export default SuperheroesList;
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<SuperheroesList />} />
+        <Route path="/hero/:id" element={<HeroDetail />} /> {/* Ajout de la route pour HeroDetail */}
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
