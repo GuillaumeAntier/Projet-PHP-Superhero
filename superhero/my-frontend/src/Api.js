@@ -18,4 +18,17 @@ export const fetchData = async (endpoint) => {
     console.error("Erreur lors de la récupération des données :", error);
     throw error;
   }
+<<<<<<< HEAD
+=======
+};
+
+export const fetchHeroById = async (id) => {
+  try {
+    const response = await api.get(`/superhero/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération du héros :", error);
+    throw error;
+  }
+>>>>>>> godwin
 };
