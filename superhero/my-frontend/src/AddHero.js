@@ -62,6 +62,7 @@ const AddSuperhero = ({ setHeroes }) => {
         name="team_id"
         label="Équipe"
         apiEndpoint="http://127.0.0.1:8000/api/teams"
+        requiresDescription={true}
         handleChange={handleChange}
       />
 
@@ -69,6 +70,7 @@ const AddSuperhero = ({ setHeroes }) => {
         name="vehicle_id"
         label="Véhicule"
         apiEndpoint="http://127.0.0.1:8000/api/vehicles"
+        requiresDescription={true}
         handleChange={handleChange}
       />
 
@@ -76,6 +78,7 @@ const AddSuperhero = ({ setHeroes }) => {
         name="superpowers"
         label="Super-pouvoirs"
         apiEndpoint="http://127.0.0.1:8000/api/superpowers"
+        requiresDescription={true}
         multiple={true}
         handleChange={handleMultiSelect}
       />
@@ -84,6 +87,7 @@ const AddSuperhero = ({ setHeroes }) => {
         name="gadgets"
         label="Gadgets"
         apiEndpoint="http://127.0.0.1:8000/api/gadgets"
+        requiresDescription={true}
         multiple={true}
         handleChange={handleMultiSelect}
       />
