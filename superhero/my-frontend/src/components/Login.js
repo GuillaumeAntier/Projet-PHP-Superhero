@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthService from '../services/auth.service';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -11,7 +11,8 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await AuthService.login(email, password);
+            const userData = await AuthService.login(email, password);
+            onLogin(userData);
             navigate('/'); 
         } catch (error) {
             setError(error.response?.data?.message || 'Une erreur est survenue');

@@ -40,7 +40,7 @@ const HeroDetail = ({ setHeroes }) => {
             <p><strong>Équipe :</strong> {hero.team}</p>
             <p><strong>Voiture :</strong> {hero.car}</p>
             
-            <DeleteHero heroId={hero.id} setHeroes={setHeroes} />
+            <DeleteHero heroId={hero.id} setHeroes={setHeroes} className="delete-button" />
             <Link to={`/update-hero/${hero.id}`} className="update-button">
                 Mettre à jour
             </Link>

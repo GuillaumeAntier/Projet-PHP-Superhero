@@ -1,17 +1,16 @@
-/* UpdateHero.css */
-
 .update-hero {
-  max-width: 800px;
-  margin: 50px auto;
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .update-hero h1 {
-  font-size: 32px;
-  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2c3e50;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -28,89 +27,95 @@
   gap: 5px;
 }
 
-.update-hero label {
+.update-hero .form-group label {
   font-size: 16px;
-  color: #555;
-  font-weight: bold;
+  color: #2c3e50;
 }
 
-.update-hero input,
-.update-hero textarea {
-  width: 100%;
-  padding: 12px;
+.update-hero .form-group input,
+.update-hero .form-group textarea {
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
+  outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.update-hero input:focus,
-.update-hero textarea:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
-  outline: none;
+.update-hero .form-group input:focus,
+.update-hero .form-group textarea:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
 }
 
-.update-hero textarea {
+.update-hero .form-group textarea {
   resize: vertical;
   min-height: 100px;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .update-hero .update-button,
 .update-hero .back-button {
-  padding: 12px 20px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   font-size: 16px;
-  font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  text-align: center;
-  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.update-hero .update-button {
-  background-color: #28a745;
-  color: white;
-}
-
-.update-hero .update-button:hover {
-  background-color: #218838;
+.update-hero .update-button:hover,
+.update-hero .back-button:hover {
+  background-color: #2980b9;
   transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .update-hero .back-button {
-  background-color: #6c757d;
-  color: white;
+  background-color: #e74c3c;
 }
 
 .update-hero .back-button:hover {
-  background-color: #5a6268;
-  transform: translateY(-2px);
+  background-color: #c0392b;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .update-hero {
-    padding: 15px;
+      padding: 15px;
   }
 
   .update-hero h1 {
-    font-size: 28px;
+      font-size: 20px;
   }
 
-  .update-hero label {
-    font-size: 14px;
+  .update-hero .form-group label {
+      font-size: 14px;
   }
 
-  .update-hero input,
-  .update-hero textarea {
-    font-size: 14px;
+  .update-hero .form-group input,
+  .update-hero .form-group textarea {
+      font-size: 14px;
+  }
+
+  .button-group {
+      flex-direction: column;
+      align-items: center;
   }
 
   .update-hero .update-button,
   .update-hero .back-button {
-    width: 100%;
-    margin: 5px 0;
+      width: 100%;
+      font-size: 14px;
+      padding: 8px 16px;
   }
 }

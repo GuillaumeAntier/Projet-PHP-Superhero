@@ -6,6 +6,7 @@ import HeroDetail from "./HeroDetail";
 import UpdateHero from "./UpdateHero";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Profile from "./components/Profile";
 import AuthService from "./services/auth.service";
 import { LogOut, Search, User } from "lucide-react";
 import "./css/App.css";
@@ -15,9 +16,8 @@ const PrivateRoute = ({ children }) => {
     return user ? children : <Navigate to="/login" />;
 };
 
-const SuperheroesList = ({ heroes, setHeroes }) => {
+const SuperheroesList = ({ heroes, setHeroes, user }) => {
     const navigate = useNavigate();
-    const user = AuthService.getCurrentUser();
 
     const handleLogout = () => {
         AuthService.logout();
@@ -56,7 +56,7 @@ const SuperheroesList = ({ heroes, setHeroes }) => {
                 <div className="header-right">
                     <div className="user-info">
                         <User size={20} />
-                        <span className="username">{user?.user?.name}</span>
+                        <Link to="/profile" className="username">{user?.name}</Link>
                     </div>
                     <button onClick={handleLogout} className="logout-button">
                         <LogOut size={20} />
@@ -95,15 +95,24 @@ const SuperheroesList = ({ heroes, setHeroes }) => {
 
 const App = () => {
     const [heroes, setHeroes] = useState([]);
+    const [user, setUser] = useState(AuthService.getCurrentUser()?.user || null);
+
+    const updateUser = (updatedUser) => {
+        setUser(updatedUser);
+    };
+
+    const handleLogin = (userData) => {
+        setUser(userData.user);
+    };
 
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={
                     <PrivateRoute>
-                        <SuperheroesList heroes={heroes} setHeroes={setHeroes} />
+                        <SuperheroesList heroes={heroes} setHeroes={setHeroes} user={user} />
                     </PrivateRoute>
                 } />
                 <Route path="/hero/:id" element={
@@ -119,6 +128,11 @@ const App = () => {
                 <Route path="/update-hero/:id" element={
                     <PrivateRoute>
                         <UpdateHero setHeroes={setHeroes} />
+                    </PrivateRoute>
+                } />
+                <Route path="/profile" element={
+                    <PrivateRoute>
+                        <Profile updateUser={updateUser} />
                     </PrivateRoute>
                 } />
             </Routes>

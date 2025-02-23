@@ -9,9 +9,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
 
     Route::post('logout', [AuthController::class, 'logout']);
 
@@ -26,4 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('books', [BookController::class, 'store']);
     Route::put('books/{id}', [BookController::class, 'update']);
     Route::delete('books/{id}', [BookController::class, 'destroy']);
+
+    Route::get('/user', [AuthController::class, 'show']);
+    Route::put('/user/update', [AuthController::class, 'update']);
+    Route::delete('/user/delete', [AuthController::class, 'destroy']);
 });

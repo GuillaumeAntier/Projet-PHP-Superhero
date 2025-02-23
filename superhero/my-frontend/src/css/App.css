@@ -1,146 +1,160 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  min-height: 100vh;
-  background-color: #f8f9fa;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  background-color: #ffffff;
+  padding: 15px 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
-.header-left, .header-center, .header-right {
-  display: flex;
-  align-items: center;
-}
-
-.logo {
-  font-size: 1.8rem;
-  color: #2563eb;
+.header-left .logo {
+  font-size: 24px;
   font-weight: bold;
+  color: #2c3e50;
   margin: 0;
 }
 
+.header-center {
+  flex: 1;
+  margin: 0 20px;
+}
+
 .search-container {
-  position: relative;
   display: flex;
   align-items: center;
-  width: 400px;
+  background-color: #f0f0f0;
+  border-radius: 25px;
+  padding: 8px 15px;
 }
 
 .search-icon {
-  position: absolute;
-  left: 12px;
-  color: #64748b;
+  color: #777;
 }
 
 .search-bar {
-  width: 100%;
-  padding: 10px 40px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  margin-left: 10px;
+  font-size: 16px;
+  color: #333;
 }
 
-.search-bar:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+.header-right {
+  display: flex;
+  align-items: center;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 8px;
   margin-right: 20px;
-  padding: 8px 16px;
-  background-color: #f1f5f9;
-  border-radius: 8px;
 }
 
-.username {
+.user-info .username {
+  margin-left: 10px;
+  font-size: 16px;
+  color: #2c3e50;
+  text-decoration: none;
   font-weight: 500;
-  color: #1e293b;
+}
+
+.user-info .username:hover {
+  color: #3498db;
 }
 
 .logout-button {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: #ef4444;
+  background-color: #e74c3c;
   color: white;
   border: none;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 25px;
   cursor: pointer;
+  font-size: 14px;
   transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
-  background-color: #dc2626;
+  background-color: #c0392b;
+}
+
+.logout-button span {
+  margin-left: 8px;
 }
 
 .filters {
   display: flex;
-  gap: 12px;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .filter-button {
-  padding: 8px 16px;
-  background-color: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  color: #475569;
+  background-color: #3498db;
+  color: white;
+  border: 2px solid #2980b9;
+  padding: 10px 20px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .filter-button:hover {
-  background-color: #f8fafc;
-  border-color: #2563eb;
-  color: #2563eb;
+  background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .hero-card {
   background-color: white;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .hero-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hero-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .hero-image-container {
-  position: relative;
-  padding-top: 133%;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 
 .hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -148,51 +162,81 @@
 
 .hero-name {
   display: block;
-  padding: 1rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #1e293b;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: 600;
   text-align: center;
+  color: #2c3e50;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .add-hero-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #2563eb;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 30px auto;
+  padding: 15px;
+  background-color: #2ecc71;
   color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  text-align: center;
   text-decoration: none;
-  border-radius: 8px;
-  font-weight: 500;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .add-hero-button:hover {
-  background-color: #1d4ed8;
+  background-color: #27ae60;
 }
 
 @media (max-width: 768px) {
   .header {
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
   }
 
-  .search-container {
-      width: 100%;
+  .header-center {
+    width: 100%;
+    margin: 10px 0;
   }
 
   .header-right {
-      width: 100%;
-      justify-content: center;
-      gap: 1rem;
-  }
-
-  .filters {
-      justify-content: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 10px;
   }
 
   .hero-grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .hero-name {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-button {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+
+  .hero-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .hero-name {
+    font-size: 14px;
   }
 }

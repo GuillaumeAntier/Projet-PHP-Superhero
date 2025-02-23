@@ -36,7 +36,6 @@ body {
   font-weight: bold;
 }
 
-/* Navigation des filtres */
 .filters {
   display: flex;
   justify-content: space-around;
@@ -57,14 +56,12 @@ body {
   background-color: #ccc;
 }
 
-/* Grille des héros */
 .hero-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 20px;
 }
 
-/* Carte des héros */
 .hero-card {
   display: flex;
   align-items: center;
@@ -88,7 +85,6 @@ body {
   color: #333;
 }
 
-/* Chargement et Erreur */
 .loading,
 .error {
   text-align: center;
