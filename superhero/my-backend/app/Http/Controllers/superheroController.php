@@ -59,9 +59,11 @@ class superheroController extends Controller
             $superhero->gadjets = $request->gadjets;
             $superhero->team = $request->team;
             $superhero->car = $request->car;
+
+            $superhero->save();
             return response()->json([
                 'message' => 'Superhero updated'
-            ], 404);
+            ], 200);
         } else {
             return response()->json([
                 'message' => 'Superhero not found'
@@ -76,7 +78,7 @@ class superheroController extends Controller
             $superhero->delete();
             return response()->json([
                 'message' => 'Superhero deleted'
-            ], 404);
+            ], 200);
         } else {
             return response()->json([
                 'message' => 'Superhero not found'

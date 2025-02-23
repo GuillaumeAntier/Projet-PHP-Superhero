@@ -1,0 +1,116 @@
+/* UpdateHero.css */
+
+.update-hero {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-hero h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.update-hero form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.update-hero .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.update-hero label {
+  font-size: 16px;
+  color: #555;
+  font-weight: bold;
+}
+
+.update-hero input,
+.update-hero textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.update-hero input:focus,
+.update-hero textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+.update-hero textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.update-hero .update-button,
+.update-hero .back-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.update-hero .update-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.update-hero .update-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.update-hero .back-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.update-hero .back-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .update-hero {
+    padding: 15px;
+  }
+
+  .update-hero h1 {
+    font-size: 28px;
+  }
+
+  .update-hero label {
+    font-size: 14px;
+  }
+
+  .update-hero input,
+  .update-hero textarea {
+    font-size: 14px;
+  }
+
+  .update-hero .update-button,
+  .update-hero .back-button {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

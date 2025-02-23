@@ -3,11 +3,10 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import AddHero from "./AddHero";
 import HeroDetail from "./HeroDetail";
-import "./App.css";
+import UpdateHero from "./UpdateHero";
+import "./css/App.css";
 
-const SuperheroesList = () => {
-  const [heroes, setHeroes] = useState([]);
-
+const SuperheroesList = ({ heroes, setHeroes }) => {
   useEffect(() => {
     const getHeroes = async () => {
       try {
@@ -18,7 +17,7 @@ const SuperheroesList = () => {
       }
     };
     getHeroes();
-  }, []);
+  }, [setHeroes]);
 
   return (
     <div className="container">
@@ -46,16 +45,23 @@ const SuperheroesList = () => {
           </div>
         ))}
       </div>
+      <Link to="/add-hero" className="add-hero-button">
+        Ajouter un super-héros
+      </Link>
     </div>
   );
 };
 
 const App = () => {
+  const [heroes, setHeroes] = useState([]);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SuperheroesList />} />
-        <Route path="/hero/:id" element={<HeroDetail />} />
+        <Route path="/" element={<SuperheroesList heroes={heroes} setHeroes={setHeroes} />} />
+        <Route path="/hero/:id" element={<HeroDetail setHeroes={setHeroes} />} />
+        <Route path="/add-hero" element={<AddHero setHeroes={setHeroes} />} />
+        <Route path="/update-hero/:id" element={<UpdateHero setHeroes={setHeroes} />} />
       </Routes>
     </Router>
   );

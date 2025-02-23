@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchData } from "./Api";
+import DeleteHero from "./DeleteHero";
+import "./css/HeroDetail.css";
 
-const HeroDetail = () => {
+const HeroDetail = ({ setHeroes }) => {
   const { id } = useParams();
   const [hero, setHero] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,6 +40,19 @@ const HeroDetail = () => {
       <p><strong>Gadgets :</strong> {hero.gadjets}</p>
       <p><strong>Équipe :</strong> {hero.team}</p>
       <p><strong>Voiture :</strong> {hero.car}</p>
+
+      {/* Bouton de suppression */}
+      <DeleteHero heroId={hero.id} setHeroes={setHeroes} />
+
+      {/* Bouton de mise à jour */}
+      <Link to={`/update-hero/${hero.id}`} className="update-button">
+        Mettre à jour
+      </Link>
+
+      {/* Bouton Retour à l'accueil */}
+      <Link to="/" className="home-button">
+        Retour à l'accueil
+      </Link>
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./css/AddHero.css";
 
-const AddSuperhero = ({ setHeroes }) => {
+const AddHero = ({ setHeroes }) => {
   const [formData, setFormData] = useState({
     heroname: "",
     realname: "",
@@ -15,6 +17,8 @@ const AddSuperhero = ({ setHeroes }) => {
     car: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,10 +30,13 @@ const AddSuperhero = ({ setHeroes }) => {
       console.log("Super-héros ajouté :", response.data);
 
       setHeroes((prevHeroes) => [...prevHeroes, response.data]);
+
+      navigate("/");
     } catch (error) {
       console.error("Erreur lors de l'ajout :", error.response?.data || error.message);
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <input type="text" name="heroname" placeholder="Nom du héros" onChange={handleChange} />
@@ -43,9 +50,8 @@ const AddSuperhero = ({ setHeroes }) => {
       <input type="text" name="team" placeholder="Equipe" onChange={handleChange} />
       <input type="text" name="car" placeholder="Véhicule" onChange={handleChange} />
       <button type="submit">Ajouter</button>
-      
-    </form> 
+    </form>
   );
 };
 
-export default AddSuperhero;
+export default AddHero;
