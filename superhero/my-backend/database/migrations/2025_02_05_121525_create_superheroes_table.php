@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('team')->nullable();
             $table->string('car')->nullable();
             $table->timestamps();
+            $table->foreignId('user_id')
+            ->constrained()
+            ->onDelete('cascade');
         });
     }
 
