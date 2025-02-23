@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddHero from "./AddHero"; 
+import { Link } from 'react-router-dom';
+
 
 const SuperheroesList = () => {
   const [heroes, setHeroes] = useState([]);
