@@ -16,6 +16,6 @@ class Superpower extends Model
 
     public function superheroes()
     {
-        return $this->belongsToMany(Superhero::class, 'superhero_superpower');
+        return $this->belongsToMany(Superhero::class, 'superhero_superpower', 'superpower_id', 'superhero_id');
     }
 }

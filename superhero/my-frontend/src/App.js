@@ -28,7 +28,7 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
         const getHeroes = async () => {
             try {
                 const user = AuthService.getCurrentUser();
-                const response = await axios.get("http://127.0.0.1:8000/api/superhero", {
+                const response = await axios.get("http://127.0.0.1:8000/api/superheroes", {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -78,9 +78,9 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
                     <div key={hero.id} className="hero-card">
                         <Link to={`/hero/${hero.id}`} className="hero-link">
                             <div className="hero-image-container">
-                                <img src={hero.image || "/api/placeholder/300/400"} alt={hero.heroname} className="hero-image" />
+                                <img src={hero.image || "/api/placeholder/300/400"} alt={hero.hero_name} className="hero-image" />
                             </div>
-                            <span className="hero-name">{hero.heroname}</span>
+                            <span className="hero-name">{hero.hero_name}</span>
                         </Link>
                     </div>
                 ))}

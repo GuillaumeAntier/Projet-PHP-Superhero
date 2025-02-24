@@ -19,7 +19,9 @@ class CreateSuperheroesTable extends Migration
             $table->foreignId('city_id')->constrained('cities');
             $table->foreignId('team_id')->constrained('teams');
             $table->foreignId('vehicle_id')->constrained('vehicles');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')
+            ->constrained()
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

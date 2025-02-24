@@ -13,8 +13,7 @@ const AddSuperhero = ({ setHeroes }) => {
     team_id: "",
     vehicle_id: "",
     superpowers: [], 
-    gadgets: [], 
-    user_id: 1,    
+    gadgets: [],
   });
 
   const handleChange = (e) => {

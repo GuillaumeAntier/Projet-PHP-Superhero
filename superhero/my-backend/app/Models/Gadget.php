@@ -16,6 +16,6 @@ class Gadget extends Model
 
     public function superheroes()
     {
-        return $this->belongsToMany(Superhero::class, 'superhero_gadget');
+        return $this->belongsToMany(Superhero::class, 'superhero_gadget', 'gadget_id', 'superhero_id');
     }
 }

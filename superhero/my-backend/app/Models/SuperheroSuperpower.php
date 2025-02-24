@@ -14,13 +14,4 @@ class SuperheroSuperpower extends Model
         'superpower_id',
     ];
 
-    public function superhero()
-    {
-        return $this->belongsTo(Superhero::class);
-    }
-
-    public function superpower()
-    {
-        return $this->belongsTo(Superpower::class);
-    }
 }
