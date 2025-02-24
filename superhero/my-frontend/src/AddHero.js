@@ -1,37 +1,37 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./css/AddHero.css";
+import EntitySelector from "./EntitySelector";
 
-const AddHero = ({ setHeroes }) => {
+const AddSuperhero = ({ setHeroes }) => {
   const [formData, setFormData] = useState({
-    heroname: "",
-    realname: "",
-    sexe: "",
-    planet: "",
+    real_name: "",
+    hero_name: "",
+    gender: "",
     description: "",
-    superpowers: "",
-    protectedcountry: "",
-    gadjets: "",
-    team: "",
-    car: "",
+    planet_id: "",
+    city_id: "",
+    team_id: "",
+    vehicle_id: "",
+    superpowers: [], 
+    gadgets: [], 
+    user_id: 1,    
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleMultiSelect = (e) => {
+    const selectedOptions = [...e.target.selectedOptions].map((option) => option.value);
+    setFormData({ ...formData, [e.target.name]: selectedOptions });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/superhero", formData);
+      const response = await axios.post("http://127.0.0.1:8000/api/superheroes", formData);
       console.log("Super-héros ajouté :", response.data);
-
-      setHeroes((prevHeroes) => [...prevHeroes, response.data]);
-
-      navigate("/");
+      window.location.reload(false);
     } catch (error) {
       console.error("Erreur lors de l'ajout :", error.response?.data || error.message);
     }
@@ -39,19 +39,62 @@ const AddHero = ({ setHeroes }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="heroname" placeholder="Nom du héros" onChange={handleChange} />
-      <input type="text" name="realname" placeholder="Nom réel" onChange={handleChange} />
-      <input type="text" name="sexe" placeholder="Sexe" onChange={handleChange} />
-      <input type="text" name="planet" placeholder="Planète" onChange={handleChange} />
+      <input type="text" name="real_name" placeholder="Nom réel" onChange={handleChange} />
+      <input type="text" name="hero_name" placeholder="Nom du héros" onChange={handleChange} />
+      <input type="text" name="gender" placeholder="Sexe" onChange={handleChange} />
       <textarea name="description" placeholder="Description" onChange={handleChange}></textarea>
-      <input type="text" name="superpowers" placeholder="Super-Pouvoirs" onChange={handleChange} />
-      <input type="text" name="protectedcountry" placeholder="Ville Protégée" onChange={handleChange} />
-      <input type="text" name="gadjets" placeholder="Gadjets" onChange={handleChange} />
-      <input type="text" name="team" placeholder="Equipe" onChange={handleChange} />
-      <input type="text" name="car" placeholder="Véhicule" onChange={handleChange} />
+
+      <EntitySelector
+        name="planet_id"
+        label="Planète"
+        apiEndpoint="http://127.0.0.1:8000/api/planets"
+        handleChange={handleChange}
+      />
+
+      <EntitySelector
+        name="city_id"
+        label="Ville"
+        apiEndpoint="http://127.0.0.1:8000/api/cities"
+        handleChange={handleChange}
+      />
+
+      <EntitySelector
+        name="team_id"
+        label="Équipe"
+        apiEndpoint="http://127.0.0.1:8000/api/teams"
+        requiresDescription={true}
+        handleChange={handleChange}
+      />
+
+      <EntitySelector
+        name="vehicle_id"
+        label="Véhicule"
+        apiEndpoint="http://127.0.0.1:8000/api/vehicles"
+        requiresDescription={true}
+        handleChange={handleChange}
+      />
+
+      <EntitySelector
+        name="superpowers"
+        label="Super-pouvoirs"
+        apiEndpoint="http://127.0.0.1:8000/api/superpowers"
+        requiresDescription={true}
+        multiple={true}
+        handleChange={handleMultiSelect}
+      />
+
+      <EntitySelector
+        name="gadgets"
+        label="Gadgets"
+        apiEndpoint="http://127.0.0.1:8000/api/gadgets"
+        requiresDescription={true}
+        multiple={true}
+        handleChange={handleMultiSelect}
+      />
+
       <button type="submit">Ajouter</button>
     </form>
   );
 };
 
-export default AddHero;
+export default AddSuperhero;
