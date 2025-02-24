@@ -8,11 +8,9 @@ const login = async (email, password) => {
             email,
             password
         });
-
         if (response.data.access_token) {
             localStorage.setItem('user', JSON.stringify(response.data));
         }
-
         return response.data;
     } catch (error) {
         throw error;
@@ -23,15 +21,13 @@ const logout = () => {
     localStorage.removeItem('user');
 };
 
-const register = async (name, email, password, password_confirmation) => {
+const register = async (formData) => {
     try {
-        const response = await axios.post(API_URL + "register", {
-            name,
-            email,
-            password,
-            password_confirmation
+        const response = await axios.post(API_URL + "register", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         });
-
         return response.data;
     } catch (error) {
         throw error;

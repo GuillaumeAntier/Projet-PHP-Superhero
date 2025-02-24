@@ -13,7 +13,7 @@ const Login = ({ onLogin }) => {
         try {
             const userData = await AuthService.login(email, password);
             onLogin(userData);
-            navigate('/'); 
+            navigate('/');
         } catch (error) {
             setError(error.response?.data?.message || 'Une erreur est survenue');
         }
@@ -45,7 +45,7 @@ const Login = ({ onLogin }) => {
                 <button type="submit">Se connecter</button>
             </form>
             <div className="register-link">
-                Pas encore de compte ? 
+                Pas encore de compte ?
                 <Link to="/register">Créer un compte</Link>
             </div>
         </div>

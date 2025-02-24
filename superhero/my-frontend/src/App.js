@@ -56,7 +56,7 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
                 <div className="header-right">
                     <div className="user-info">
                         <User size={20} />
-                        <Link to="/profile" className="username">{user?.name}</Link>
+                        <Link to="/profile" className="username">{user?.firstname}</Link>
                     </div>
                     <button onClick={handleLogout} className="logout-button">
                         <LogOut size={20} />
