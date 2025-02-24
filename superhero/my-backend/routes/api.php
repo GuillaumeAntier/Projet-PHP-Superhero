@@ -60,6 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('vehicles', VehicleController::class);
 
     Route::get('/user', [AuthController::class, 'show']);
-    Route::put('/user/update', [AuthController::class, 'update']);
+    Route::post('/user/update', [AuthController::class, 'update']);
     Route::delete('/user/delete', [AuthController::class, 'destroy']);
 });

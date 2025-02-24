@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -8,23 +7,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'photo' => 'nullable|image|max:2048',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
+        $userData = [
+            'lastname' => $request->lastname,
+            'firstname' => $request->firstname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
+        ];
+        
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('usersUploads', 'public');
+            $userData['photo'] = $path;
+        }
 
+        $user = User::create($userData);
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -73,34 +82,70 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-
+        
+        \Log::info('Données de mise à jour reçues:', $request->all());
+        
         $request->validate([
-            'name' => 'sometimes|required|string|max:255',
+            'lastname' => 'sometimes|required|string|max:255',
+            'firstname' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,'.$user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'sometimes|required|string|min:8|confirmed',
+            'photo' => 'sometimes|required|image|max:2048',
         ]);
 
-        if ($request->filled('name')) {
-            $user->name = $request->name;
+        \Log::info('Validation passée');
+        
+        if ($request->has('lastname')) {
+            $user->lastname = $request->lastname;
+            \Log::info('Lastname updated:', ['lastname' => $request->lastname]);
         }
-        if ($request->filled('email')) {
+        
+        if ($request->has('firstname')) {
+            $user->firstname = $request->firstname;
+            \Log::info('Firstname updated:', ['firstname' => $request->firstname]);
+        }
+        
+        if ($request->has('email')) {
             $user->email = $request->email;
+            \Log::info('Email updated:', ['email' => $request->email]);
         }
+        
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
+            \Log::info('Password updated');
+        }
+        
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+            
+            $path = $request->file('photo')->store('usersUploads', 'public');
+            $user->photo = $path;
+            \Log::info('Photo updated:', ['photo' => $path]);
         }
 
         $user->save();
-
-        return response()->json(['message' => 'Profil mis à jour', 'user' => $user]);
+        
+        \Log::info('Utilisateur après mise à jour:', $user->toArray());
+        
+        return response()->json([
+            'message' => 'Profil mis à jour', 
+            'user' => $user
+        ]);
     }
 
     public function destroy()
     {
         $user = Auth::user();
+        
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
+        
         $user->tokens()->delete();
         $user->delete();
-
+        
         return response()->json(['message' => 'Compte supprimé avec succès']);
     }
 }
