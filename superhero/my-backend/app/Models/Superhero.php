@@ -5,22 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class superhero extends Model
+class Superhero extends Model
 {
     use HasFactory;
-    protected $table = 'superheroes';
+
     protected $fillable = [
-        'hero_name', 
-        'real_name', 
-        'gender', 
-        'planet_id', 
-        'description', 
-        'city_id', 
-        'team_id', 
-        'vehicle_id', 
+        'hero_name',
+        'real_name',
+        'gender',
+        'planet_id',
+        'description',
+        'city_id',
+        'team_id',
+        'vehicle_id',
         'user_id',
+        'photo',
     ];
-        public function user()
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -49,7 +51,4 @@ class superhero extends Model
     {
         return $this->belongsTo(Team::class);
     }
-
-
-    
 }

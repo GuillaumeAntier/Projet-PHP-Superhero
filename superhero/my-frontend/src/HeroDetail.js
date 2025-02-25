@@ -60,11 +60,16 @@ const HeroDetail = ({ setHeroes }) => {
     return (
         <div className="hero-detail">
             <h2>{hero.hero_name} - {hero.real_name}</h2>
+            {hero.photo && (
+                <div className="hero-photo">
+                    <img src={`http://127.0.0.1:8000/storage/${hero.photo}`} alt={hero.hero_name} />
+                </div>
+            )}
             <div>
-            <div>
-                <strong>Genre: </strong> {hero.gender}
-            </div>
-                <strong>Description du Superhéro</strong> :{hero.description}
+                <div>
+                    <strong>Genre: </strong> {hero.gender}
+                </div>
+                <strong>Description du Superhéro</strong> : {hero.description}
             </div>
             <div>
                 <strong>Planète:</strong> {planet ? planet.name : "Inconnue"}
@@ -75,13 +80,13 @@ const HeroDetail = ({ setHeroes }) => {
             <div>
                 <strong>Équipe:</strong> {team ? team.name : "Aucune"}
                 {team && team.description && (
-                    <p className="description">Description :{team.description}</p>
+                    <p className="description">Description : {team.description}</p>
                 )}
             </div>
             <div>
                 <strong>Véhicule:</strong> {vehicle ? vehicle.name : "Aucun"}
                 {vehicle && vehicle.description && (
-                    <p className="description">Description :{vehicle.description}</p>
+                    <p className="description">Description : {vehicle.description}</p>
                 )}
             </div>
             <div>
@@ -91,7 +96,7 @@ const HeroDetail = ({ setHeroes }) => {
                         <li key={superpower.id}>
                             {superpower.name}
                             {superpower.description && (
-                                <p className="description">Description :{superpower.description}</p>
+                                <p className="description">Description : {superpower.description}</p>
                             )}
                         </li>
                     ))}
@@ -104,7 +109,7 @@ const HeroDetail = ({ setHeroes }) => {
                         <li key={gadget.id}>
                             {gadget.name}
                             {gadget.description && (
-                                <p className="description">Description :{gadget.description}</p>
+                                <p className="description">Description : {gadget.description}</p>
                             )}
                         </li>
                     ))}

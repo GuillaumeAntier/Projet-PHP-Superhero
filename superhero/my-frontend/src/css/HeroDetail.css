@@ -1,81 +1,119 @@
-.hero-detail {
+hero-detail {
   max-width: 800px;
   margin: 40px auto;
   padding: 30px;
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.hero-detail h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 28px;
-  color: #2c3e50;
-  font-weight: 600;
 }
 
-.hero-detail p {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6;
+.hero-detail h2 {
+  font-size: 26px;
+  color: #2c3e50;
+  font-weight: 700;
   margin-bottom: 15px;
 }
 
-.hero-detail p strong {
-  color: #2c3e50;
-  font-weight: 500;
+.hero-photo {
+  width: 100%;
+  max-width: 250px;
+  margin: 10px 0 20px;
 }
 
-.hero-detail .update-button,
-.hero-detail .home-button,
-.hero-detail .delete-button {
+.hero-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  object-fit: cover;
+}
+
+.hero-photo img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-detail > div {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-detail strong {
+  color: #2c3e50;
+  font-weight: 600;
   display: inline-block;
-  padding: 12px 20px;
-  margin: 10px 5px;
+  margin-right: 5px;
+}
+
+.hero-detail ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.hero-detail li {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+  padding-left: 10px;
+  border-left: 3px solid #ddd;
+}
+
+
+.home-button,
+.delete-button {
+  display: inline-block;
+  padding: 12px 18px;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.hero-detail .update-button {
-  background-color: #3498db;
+  border: none;
   color: white;
+  margin-top: 15px;
+  width: auto;
+  min-width: 150px;
 }
 
-.hero-detail .update-button:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-}
-
-.hero-detail .home-button {
-  background-color: #95a5a6;
-  color: white;
-}
-
-.hero-detail .home-button:hover {
-  background-color: #7f8c8d;
-  transform: translateY(-2px);
-}
-
-.hero-detail .delete-button {
+.delete-button {
   background-color: #e74c3c;
-  color: white;
+  margin-right: 10px;
 }
 
-.hero-detail .delete-button:hover {
+.delete-button:hover {
   background-color: #c0392b;
   transform: translateY(-2px);
 }
 
-.hero-detail .update-button:active,
-.hero-detail .home-button:active,
-.hero-detail .delete-button:active {
-  transform: translateY(0);
+.home-button {
+  background-color: #3498db;
+}
+
+.home-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 @keyframes fadeIn {
@@ -89,11 +127,12 @@
   }
 }
 
-.hero-detail h1,
-.hero-detail p,
-.hero-detail .update-button,
-.hero-detail .home-button,
-.hero-detail .delete-button {
+.hero-detail > h2,
+.hero-photo,
+.hero-detail > div,
+.hero-detail li,
+.home-button,
+.delete-button {
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -101,20 +140,16 @@
   .hero-detail {
     padding: 20px;
   }
-
-  .hero-detail h1 {
-    font-size: 24px;
+  
+  .hero-photo {
+    max-width: 200px;
   }
-
-  .hero-detail p {
-    font-size: 14px;
-  }
-
-  .hero-detail .update-button,
-  .hero-detail .home-button,
-  .hero-detail .delete-button {
-    font-size: 14px;
-    padding: 10px 15px;
+  
+  .home-button,
+  .delete-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
   }
 }
 
@@ -123,19 +158,18 @@
     margin: 20px 10px;
     padding: 15px;
   }
-
-  .hero-detail h1 {
-    font-size: 22px;
+  
+  .hero-photo {
+    max-width: 180px;
   }
-
-  .hero-detail p {
-    font-size: 12px;
+  
+  .hero-detail > div {
+    padding: 10px;
   }
-
-  .hero-detail .update-button,
-  .hero-detail .home-button,
-  .hero-detail .delete-button {
-    font-size: 12px;
-    padding: 8px 12px;
+  
+  .home-button,
+  .delete-button {
+    font-size: 14px;
+    padding: 10px 15px;
   }
 }
