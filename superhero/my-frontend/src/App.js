@@ -26,7 +26,8 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
         équipe: '',
         ville: '',
         sexe: '',
-        gadget: ''
+        gadget: '',
+        utilisateur: ''
     });
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -108,7 +109,6 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
     const groupHeroesByFilter = (heroes, filterType) => {
         const heroesArray = Object.values(heroes).flat();
         return heroesArray.reduce((acc, hero) => {
-            console.log("Heroes Array : " ,heroesArray);
             let key = "Inconnu";
             if (filterType === "planète") key = hero.planet?.name || "Inconnu";
             if (filterType === "pouvoir") key = hero.superpowers?.map(p => p.name).join(", ") || "Pas de pouvoir";
@@ -116,6 +116,7 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
             if (filterType === "ville") key = hero.city?.name || "Inconnu";
             if (filterType === "sexe") key = hero.gender || "Inconnu";
             if (filterType === "gadget") key = hero.gadgets?.map(g => g.name).join(", ") || "Pas de gadget";
+            if (filterType === "utilisateur") key = `${hero.user?.firstname || ''} ${hero.user?.lastname || ''}`.trim() || "Inconnu";
             if (!acc[key]) acc[key] = [];
             acc[key].push(hero);
             return acc;
@@ -194,7 +195,7 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
             </header>
     
             <div className="filters">
-                {['Planète', 'Pouvoir', 'Équipe', 'Ville', 'Sexe', 'Gadget'].map((filter) => (
+                {['Planète', 'Pouvoir', 'Équipe', 'Ville', 'Sexe', 'Gadget', "Utilisateur"].map((filter) => (
                     <button 
                         key={filter} 
                         className={`filter-button ${filters.groupBy === filter.toLowerCase() ? 'active' : ''}`}
@@ -241,7 +242,7 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
                         <div className="popup">
                             <button onClick={closePopup} className="close-button">X</button>
                             {selectedHeroId ? (
-                                <HeroDetail heroId={selectedHeroId} setHeroes={setHeroes} />
+                                <HeroDetail heroId={selectedHeroId} setHeroes={setHeroes} user={user} />
                             ) : (
                                 <AddHero setHeroes={setHeroes} />
                             )}

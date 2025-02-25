@@ -16,6 +16,7 @@ const EntitySelector = ({ name, label, apiEndpoint, requiresDescription = false,
   }, [apiEndpoint, label]);  
 
   const handleEntityChange = (event) => {
+    event.preventDefault();
     const value = event.target.value;
 
     if (value === "new") {
@@ -26,7 +27,8 @@ const EntitySelector = ({ name, label, apiEndpoint, requiresDescription = false,
     }
   };
 
-  const addNewEntity = async () => {
+  const addNewEntity = async (event) => {
+    event.preventDefault();
     if (newEntity.trim() === "") return;
 
     try {
@@ -50,6 +52,7 @@ const EntitySelector = ({ name, label, apiEndpoint, requiresDescription = false,
       console.error(`Erreur lors de l'ajout de ${label.toLowerCase()} :`, error);
     }
   };
+
 
   return (
     <div>

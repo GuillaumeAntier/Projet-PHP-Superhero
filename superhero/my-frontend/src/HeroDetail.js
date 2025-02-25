@@ -3,7 +3,7 @@ import axios from "axios";
 import DeleteHero from "./DeleteHero";
 import "./css/HeroDetail.css";
 
-const HeroDetail = ({ heroId, setHeroes }) => {
+const HeroDetail = ({ heroId, setHeroes, user }) => {
     const [hero, setHero] = useState(null);
     const [planets, setPlanets] = useState([]);
     const [cities, setCities] = useState([]);
@@ -53,6 +53,8 @@ const HeroDetail = ({ heroId, setHeroes }) => {
     const city = getEntityById(hero.city_id, cities);
     const team = getEntityById(hero.team_id, teams);
     const vehicle = getEntityById(hero.vehicle_id, vehicles);
+
+    console.log("Hero:", hero);
 
     return (
         <div className="hero-detail">
@@ -112,7 +114,13 @@ const HeroDetail = ({ heroId, setHeroes }) => {
                     ))}
                 </ul>
             </div>
-            <DeleteHero heroId={hero.id} setHeroes={setHeroes} className="delete-button" />
+
+            <div>
+                <strong>Crée par :</strong> {hero.user?.firstname + " " + hero.user?.lastname}
+            </div>
+            {hero.user?.id === user.id && (
+                <DeleteHero heroId={hero.id} setHeroes={setHeroes} className="delete-button" />
+            )}
         </div>
     );
 };

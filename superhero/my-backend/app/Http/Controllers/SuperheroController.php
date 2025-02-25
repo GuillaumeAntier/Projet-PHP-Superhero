@@ -13,26 +13,24 @@ class SuperheroController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->superheroes()->with(['superpowers', 'gadgets', 'planet', 'team', 'city']);
+        $superheroes = Auth::user()->superheroes()->with(['superpowers', 'gadgets', 'planet', 'team', 'city', 'user'])->get();
 
         if ($request->filled('groupBy')) {
             $groupBy = $request->groupBy;
 
             if ($groupBy === 'planète') {
-                $superheroes = $query->get()->groupBy(fn($hero) => $hero->planet?->name ?? 'Inconnu');
+                $superheroes = $superheroes->groupBy(fn($hero) => $hero->planet?->name ?? 'Inconnu');
             } elseif ($groupBy === 'pouvoir') {
-                $superheroes = $query->get()->groupBy(fn($hero) => $hero->superpowers->pluck('name')->implode(', ') ?: 'Aucun pouvoir');
+                $superheroes = $superheroes->groupBy(fn($hero) => $hero->superpowers->pluck('name')->implode(', ') ?: 'Aucun pouvoir');
             } elseif ($groupBy === 'équipe') {
-                $superheroes = $query->get()->groupBy(fn($hero) => $hero->team?->name ?? 'Sans équipe');
+                $superheroes = $superheroes->groupBy(fn($hero) => $hero->team?->name ?? 'Sans équipe');
             } elseif ($groupBy === 'ville') {
-                $superheroes = $query->get()->groupBy(fn($hero) => $hero->city?->name ?? 'Ville inconnue');
+                $superheroes = $superheroes->groupBy(fn($hero) => $hero->city?->name ?? 'Ville inconnue');
             } elseif ($groupBy === 'sexe') {
-                $superheroes = $query->get()->groupBy('gender');
-            } else {
-                $superheroes = $query->get();
+                $superheroes = $superheroes->groupBy('gender');
+            } elseif ($groupBy === 'utilisateur') {
+                $superheroes = Superhero::with(['superpowers', 'gadgets', 'planet', 'team', 'city', 'user'])->get()->groupBy(fn($hero) => $hero->user?->firstname . ' ' . $hero->user?->lastname ?? 'Inconnu');
             }
-        } else {
-            $superheroes = $query->get();
         }
 
         return response()->json($superheroes);
@@ -87,7 +85,8 @@ class SuperheroController extends Controller
     }
 
     public function show(Superhero $superhero)
-    {
+    {   
+        $superhero->load(['superpowers', 'gadgets', 'planet', 'team', 'city', 'user']);
         return response()->json($superhero);
     }
 
