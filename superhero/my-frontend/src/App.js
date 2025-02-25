@@ -31,11 +31,18 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [suggestions, setSuggestions] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedHeroId, setSelectedHeroId] = useState(null);
 
-    const [showPopup, setShowPopup] = useState(false);  
+    const openPopup = (heroId) => {
+        setSelectedHeroId(heroId);
+        setShowPopup(true);
+    };
 
-    const openPopup = () => setShowPopup(true);  
-    const closePopup = () => setShowPopup(false);  
+    const closePopup = () => {
+        setSelectedHeroId(null);
+        setShowPopup(false);
+    };
 
     const handleLogout = () => {
         AuthService.logout();
@@ -162,12 +169,12 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
                                         key={hero.id} 
                                         className="autocomplete-item"
                                         onClick={() => {
-                                            navigate(`/hero/${hero.id}`);
+                                            openPopup(hero.id);
                                             setSearchTerm(""); 
                                             setSuggestions([]);
                                         }}
                                     >
-                                        {hero.hero_name}
+                                        {`${hero.hero_name} - ${hero.real_name}`}
                                     </li>
                                 ))}
                             </ul>
@@ -201,15 +208,14 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
             <div className="container">
                 {Object.keys(groupedHeroes).map((category) => (
                     <div key={category}>
-                        
                         <h2>{category}</h2>
                         <div className="category-description">
                             <h4>{getDescription(category)}</h4>
                         </div>
                         <div className="hero-grid">
                             {Array.isArray(groupedHeroes[category]) && groupedHeroes[category].map((hero) => (
-                                <div key={hero.id} className="hero-card">
-                                    <Link to={`/hero/${hero.id}`} className="hero-link">
+                                <div key={hero.id} className="hero-card" onClick={() => openPopup(hero.id)}>
+                                    <div className="hero-link">
                                         <div className="hero-image-container">
                                             <img 
                                                 src={hero.photo ? `http://127.0.0.1:8000/storage/${hero.photo}` : "/api/placeholder/300/400"} 
@@ -218,7 +224,7 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
                                             />
                                         </div>
                                         <span className="hero-name">{hero.hero_name}</span>
-                                    </Link>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -227,15 +233,18 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
             </div>
 
             <div className="container">
-                <button onClick={openPopup} className="add-hero-button">
+                <button onClick={() => openPopup(null)} className="add-hero-button">
                     Ajouter un super-héros
                 </button>
                 {showPopup && (
                     <div className="popup-overlay">
                         <div className="popup">
                             <button onClick={closePopup} className="close-button">X</button>
-                            <h2>Ajouter un Super-Héros</h2>
-                            <AddHero setHeroes={setHeroes} />
+                            {selectedHeroId ? (
+                                <HeroDetail heroId={selectedHeroId} setHeroes={setHeroes} />
+                            ) : (
+                                <AddHero setHeroes={setHeroes} />
+                            )}
                         </div>
                     </div>
                 )}

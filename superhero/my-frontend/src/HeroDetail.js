@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { fetchData } from "./Api";
 import DeleteHero from "./DeleteHero";
 import "./css/HeroDetail.css";
 
-const HeroDetail = ({ setHeroes }) => {
-    const { id } = useParams();
+const HeroDetail = ({ heroId, setHeroes }) => {
     const [hero, setHero] = useState(null);
     const [planets, setPlanets] = useState([]);
     const [cities, setCities] = useState([]);
@@ -20,18 +17,18 @@ const HeroDetail = ({ setHeroes }) => {
     useEffect(() => {
         const getHero = async () => {
             try {
-                const result = await fetchData(`/superheroes/${id}`);
-                setHero(result);
+                const result = await axios.get(`http://127.0.0.1:8000/api/superheroes/${heroId}`);
+                setHero(result.data);
                 axios.get("http://127.0.0.1:8000/api/planets").then((res) => setPlanets(res.data));
                 axios.get("http://127.0.0.1:8000/api/cities").then((res) => setCities(res.data));
                 axios.get("http://127.0.0.1:8000/api/teams").then((res) => setTeams(res.data));
                 axios.get("http://127.0.0.1:8000/api/vehicles").then((res) => setVehicles(res.data));
 
-                axios.get(`http://127.0.0.1:8000/api/superhero/${id}/superpowers`)
+                axios.get(`http://127.0.0.1:8000/api/superhero/${heroId}/superpowers`)
                     .then((res) => setSuperpowers(res.data))
                     .catch((error) => console.error(error));
 
-                axios.get(`http://127.0.0.1:8000/api/superhero/${id}/gadgets`)
+                axios.get(`http://127.0.0.1:8000/api/superhero/${heroId}/gadgets`)
                     .then((res) => setGadgets(res.data))
                     .catch((error) => console.error(error));
 
@@ -42,7 +39,7 @@ const HeroDetail = ({ setHeroes }) => {
             }
         };
         getHero();
-    }, [id]);
+    }, [heroId]);
 
     const getEntityById = (id, entities) => {
         return entities.find(entity => entity.id === id);
@@ -116,9 +113,6 @@ const HeroDetail = ({ setHeroes }) => {
                 </ul>
             </div>
             <DeleteHero heroId={hero.id} setHeroes={setHeroes} className="delete-button" />
-            <Link to="/" className="home-button">
-                Retour à l'accueil
-            </Link>
         </div>
     );
 };

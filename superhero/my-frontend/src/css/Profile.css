@@ -2,7 +2,7 @@
 
 .profile-container {
     width: 450px;
-    height: 90vh;
+    height: 96vh;
     margin: 0 auto;
     padding: 20px;
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
@@ -132,4 +132,12 @@ button[type="submit"]:hover {
     margin-bottom: 10px;
     font-size: 13px;
     width: 100%;
+}
+
+.form-actions {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 10px;
+    text-align: right;
 }

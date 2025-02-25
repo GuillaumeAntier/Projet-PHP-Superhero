@@ -81,6 +81,8 @@
   .login-container .register-link a:hover {
     text-decoration: underline;
   }
+
+  
   
   /* Réactivité pour les petits écrans */
   @media (max-width: 768px) {

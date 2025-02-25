@@ -200,8 +200,9 @@ const Profile = ({ updateUser }) => {
                     value={newUserData.password_confirmation} 
                     onChange={handleChange} 
                 />
-                
-                <button type="submit">Mettre à jour</button>
+                <div className="form-actions">
+                    <button type="submit">Mettre à jour</button>
+                </div>
             </form>
             <button onClick={handleDelete} className="delete-button">Supprimer mon compte</button>
             <button onClick={() => navigate("/")} className="back-button">Retour à l'accueil</button>
