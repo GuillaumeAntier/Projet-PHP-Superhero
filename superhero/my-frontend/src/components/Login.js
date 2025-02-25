@@ -14,7 +14,7 @@ const Login = ({ onLogin }) => {
         try {
             const userData = await AuthService.login(email, password);
             onLogin(userData);
-            navigate('/'); 
+            navigate('/');
         } catch (error) {
             setError(error.response?.data?.message || 'Une erreur est survenue');
         }
