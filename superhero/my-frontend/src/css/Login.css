@@ -1,0 +1,100 @@
+/* Style spécifique pour la page de connexion */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .login-container h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  .login-container .error-message {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .login-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .login-container label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  .login-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .login-container input:focus {
+    outline: none;
+    border-color: #3498db;
+  }
+  
+  .login-container button {
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-container button:hover {
+    background-color: #2980b9;
+  }
+  
+  .login-container .register-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .login-container .register-link a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .login-container .register-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Réactivité pour les petits écrans */
+  @media (max-width: 768px) {
+    .login-container {
+      width: 80%;
+      padding: 20px;
+    }
+  
+    .login-container h2 {
+      font-size: 22px;
+    }
+  
+    .login-container input, .login-container button {
+      font-size: 14px;
+    }
+  }
+  

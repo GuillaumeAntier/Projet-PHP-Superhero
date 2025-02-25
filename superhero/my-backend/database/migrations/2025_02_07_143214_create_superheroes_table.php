@@ -17,8 +17,10 @@ class CreateSuperheroesTable extends Migration
             $table->text('description');
             $table->foreignId('planet_id')->constrained('planets');
             $table->foreignId('city_id')->constrained('cities');
-            $table->foreignId('team_id')->constrained('teams');
-            $table->foreignId('vehicle_id')->constrained('vehicles');
+
+            $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null');
+            $table->foreignId('vehicle_id')->nullable()->constrained('vehicles')->onDelete('set null');
+            
             $table->foreignId('user_id')
             ->constrained()
             ->onDelete('cascade');

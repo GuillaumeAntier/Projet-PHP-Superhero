@@ -1,0 +1,111 @@
+body {
+    overflow-x: hidden; /* Empêche le défilement horizontal global */
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+  }
+  
+  .register-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+  
+  .register-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .error-message {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  form div {
+    margin-bottom: 15px;
+  }
+  
+  form label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    box-sizing: border-box; /* Garantit que padding ne fait pas dépasser l'élément */
+  }
+  
+  form input:focus {
+    border-color: #3498db;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Empêche les problèmes de dépassement */
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  .register-container .login-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .register-container .login-link a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .register-container .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .register-container {
+      padding: 15px;
+    }
+  
+    .register-container h2 {
+      font-size: 20px;
+    }
+  
+    form input {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 14px;
+    }
+  }
+  

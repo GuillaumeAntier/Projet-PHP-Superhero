@@ -35,6 +35,7 @@ body {
 }
 
 .search-container {
+  position: relative;
   display: flex;
   align-items: center;
   background-color: #f0f0f0;
@@ -52,6 +53,7 @@ body {
   background: none;
   outline: none;
   margin-left: 10px;
+  margin-top: 17.5px;
   font-size: 16px;
   color: #333;
 }
@@ -108,7 +110,7 @@ body {
 
 .filter-button {
   background-color: #3498db;
-  color: white;
+  color: black;
   border: 2px solid #2980b9;
   padding: 10px 20px;
   border-radius: 25px;
@@ -121,6 +123,11 @@ body {
 .filter-button:hover {
   background-color: #2980b9;
   transform: translateY(-2px);
+}
+
+.filter-button.active {
+  background-color: #007bff;  /* Bleu quand actif */
+  color: white;  /* Texte blanc quand actif */
 }
 
 .hero-grid {
@@ -199,6 +206,10 @@ body {
   background-color: #27ae60;
 }
 
+.category-description h4 {
+  margin-top: -10px;
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
@@ -238,5 +249,110 @@ body {
 
   .hero-name {
     font-size: 14px;
+  }
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 5px; 
+  padding: 5px 0;
+}
+
+.autocomplete-item {
+  padding: 12px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #2c3e50;
+  transition: background-color 0.3s ease;
+}
+
+.autocomplete-item:hover {
+  background-color: #f4f7f6;
+}
+
+.autocomplete-item:active {
+  background-color: #dce4e3;
+}
+
+.search-container {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .autocomplete-item {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .autocomplete-list {
+    max-height: 200px;
+  }
+  .autocomplete-item {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: red; 
+  font-weight: bold; 
+  display: inline-block; 
+  width: auto; 
+}
+
+
+.close-button:hover {
+  color: red; 
+  background: none; 
+}
+
+
+@media (max-width: 768px) {
+  .popup {
+    max-width: 90%;
   }
 }

@@ -5,13 +5,38 @@ namespace App\Http\Controllers;
 use App\Models\Superhero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SuperheroSuperpower;
+use App\Models\SuperheroGadget;
 
 class SuperheroController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $superheroes = Auth::user()->superheroes()->with(['superpowers', 'gadgets'])->get();
+        $query = Auth::user()->superheroes()->with(['superpowers', 'gadgets', 'planet', 'team', 'city']);
+
+        if ($request->filled('groupBy')) {
+            $groupBy = $request->groupBy;
+
+            if ($groupBy === 'planète') {
+                $superheroes = $query->get()->groupBy(fn($hero) => $hero->planet?->name ?? 'Inconnu');
+            } elseif ($groupBy === 'pouvoir') {
+                $superheroes = $query->get()->groupBy(fn($hero) => $hero->superpowers->pluck('name')->implode(', ') ?: 'Aucun pouvoir');
+            } elseif ($groupBy === 'équipe') {
+                $superheroes = $query->get()->groupBy(fn($hero) => $hero->team?->name ?? 'Sans équipe');
+            } elseif ($groupBy === 'ville') {
+                $superheroes = $query->get()->groupBy(fn($hero) => $hero->city?->name ?? 'Ville inconnue');
+            } elseif ($groupBy === 'sexe') {
+                $superheroes = $query->get()->groupBy('gender');
+            } else {
+                $superheroes = $query->get();
+            }
+        } else {
+            $superheroes = $query->get();
+        }
+
         return response()->json($superheroes);
+
+
     }
 
     public function store(Request $request)
@@ -23,13 +48,14 @@ class SuperheroController extends Controller
             'description' => 'required|string',
             'planet_id' => 'required|exists:planets,id',
             'city_id' => 'required|exists:cities,id',
-            'team_id' => 'required|exists:teams,id',
-            'vehicle_id' => 'required|exists:vehicles,id',
-            'superpowers' => 'sometimes|array',
-            'superpowers.*' => 'exists:superpowers,id',
-            'gadgets' => 'sometimes|array',
-            'gadgets.*' => 'exists:gadgets,id',
+            'team_id' => 'nullable|exists:teams,id',  
+            'vehicle_id' => 'nullable|exists:vehicles,id', 
+            'superpowers' => 'nullable|array', 
+            'superpowers.*' => 'exists:superpowers,id',  
+            'gadgets' => 'nullable|array', 
+            'gadgets.*' => 'exists:gadgets,id', 
         ]);
+        
 
         $superhero = Superhero::create([
             'real_name' => $validated['real_name'],
@@ -43,13 +69,14 @@ class SuperheroController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        if (isset($validated['superpowers'])) {
-            $superhero->superpowers()->attach($validated['superpowers']);
+        if (isset($validated['superpowers']) && !empty($validated['superpowers'])) {
+            $superhero->superpowers()->sync($validated['superpowers']); 
         }
-
-        if (isset($validated['gadgets'])) {
-            $superhero->gadgets()->attach($validated['gadgets']);
+        
+        if (isset($validated['gadgets']) && !empty($validated['gadgets'])) {
+            $superhero->gadgets()->sync($validated['gadgets']); 
         }
+        
 
         return response()->json($superhero, 201);
     }
@@ -70,4 +97,28 @@ class SuperheroController extends Controller
         $superhero->delete();
         return response()->json(null, 204);
     }
+
+    public function getSuperpowers($id)
+    {
+        $superhero = Superhero::find($id);
+        return response()->json($superhero->superpowers);
+    }
+
+    public function getGadgets($id)
+    {
+        $superhero = Superhero::find($id);
+        return response()->json($superhero->gadgets);
+    }
+
+    public function deleteSuperhero($id)
+    {
+        SuperheroSuperpower::where('superhero_id', $id)->delete();
+        SuperheroGadget::where('superhero_id', $id)->delete();
+
+        $superhero = Superhero::findOrFail($id);
+        $superhero->delete();
+
+        return response()->json(['message' => 'Superhero deleted']);
+    }
+
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthService from '../services/auth.service';
+import "../css/Login.css";
 
 const Login = ({ onLogin }) => {
     const [email, setEmail] = useState('');
@@ -45,7 +46,7 @@ const Login = ({ onLogin }) => {
                 <button type="submit">Se connecter</button>
             </form>
             <div className="register-link">
-                Pas encore de compte ? 
+                Pas encore de compte ?  
                 <Link to="/register">Créer un compte</Link>
             </div>
         </div>

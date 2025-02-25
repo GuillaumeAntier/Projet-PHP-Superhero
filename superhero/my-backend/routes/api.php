@@ -13,6 +13,7 @@ use App\Http\Controllers\PlanetController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Models\Superhero;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -20,24 +21,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
-
-    Route::get('superhero', [SuperheroController::class, 'index']);
-    Route::get('superhero/{id}', [SuperheroController::class, 'show']);
-    Route::post('superhero', [SuperheroController::class, 'store']);
-    Route::put('superhero/{id}', [SuperheroController::class, 'update']);
-    Route::delete('superhero/{id}', [SuperheroController::class, 'destroy']);
-
-    Route::get('books', [BookController::class, 'index']);
-    Route::get('books/{id}', [BookController::class, 'show']);
-    Route::post('books', [BookController::class, 'store']);
-    Route::put('books/{id}', [BookController::class, 'update']);
-    Route::delete('books/{id}', [BookController::class, 'destroy']);
-
-    Route::get('superhero', [superheroController::class, 'index']);
-    Route::get('superhero/{id}', [superheroController::class, 'show']);
-    Route::post('superhero', [superheroController::class, 'store']);
-    Route::put('superhero/{id}', [superheroController::class, 'update']);
-    Route::delete('superhero/{id}', [superheroController::class, 'destroy']);
 
     Route::apiResource('users', UserController::class);
 
@@ -62,4 +45,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'show']);
     Route::put('/user/update', [AuthController::class, 'update']);
     Route::delete('/user/delete', [AuthController::class, 'destroy']);
+
+
+    Route::get('/superhero/{id}/superpowers', [SuperheroController::class, 'getSuperpowers']);
+    Route::get('/superhero/{id}/gadgets', [SuperheroController::class, 'getGadgets']);
+
+    Route::delete('/superheroes/{id}', [SuperheroController::class, 'deleteSuperhero']);
+
+    Route::get('/superheroes', [SuperheroController::class, 'index']);
+
 });

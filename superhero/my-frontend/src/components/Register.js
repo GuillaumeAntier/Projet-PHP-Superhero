@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link } from 'react-router-dom';
 import AuthService from '../services/auth.service';
+import '../css/Register.css';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -85,7 +86,13 @@ const Register = () => {
                 </div>
 
                 <button type="submit">S'inscrire</button>
+        
+                
             </form>
+            <div className="login-link">
+                    Déjà un compte ? 
+                    <Link to="/Login">Connectez vous</Link>
+            </div>
         </div>
     );
 };
