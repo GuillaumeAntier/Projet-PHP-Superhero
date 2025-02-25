@@ -1,8 +1,6 @@
-/* Profile.css */
-
 .profile-container {
-    width: 450px;
-    height: 90vh;
+    width: 500px;
+    height: 100vh;
     margin: 0 auto;
     padding: 20px;
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
