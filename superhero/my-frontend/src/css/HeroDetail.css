@@ -81,7 +81,8 @@
 }
 
 .home-button,
-.delete-button {
+.delete-button,
+.update-button {
   display: inline-block;
   padding: 12px 18px;
   border-radius: 8px;
@@ -100,11 +101,19 @@
 
 .delete-button {
   background-color: #e74c3c;
-  margin-right: 10px;
 }
 
 .delete-button:hover {
   background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+.update-button {
+  background-color: #f39c12;
+}
+
+.update-button:hover {
+  background-color: #e67e22;
   transform: translateY(-2px);
 }
 
@@ -115,6 +124,12 @@
 .home-button:hover {
   background-color: #2980b9;
   transform: translateY(-2px);
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 @keyframes fadeIn {
@@ -133,7 +148,8 @@
 .hero-detail > div,
 .hero-detail li,
 .home-button,
-.delete-button {
+.delete-button,
+.update-button {
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -147,7 +163,8 @@
   }
   
   .home-button,
-  .delete-button {
+  .delete-button,
+  .update-button {
     display: block;
     width: 100%;
     margin: 10px 0;
@@ -169,7 +186,8 @@
   }
   
   .home-button,
-  .delete-button {
+  .delete-button,
+  .update-button {
     font-size: 14px;
     padding: 10px 15px;
   }

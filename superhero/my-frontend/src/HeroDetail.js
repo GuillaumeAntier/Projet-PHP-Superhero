@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteHero from "./DeleteHero";
+import UpdateHero from "./UpdateHero";
 import "./css/HeroDetail.css";
 
 const HeroDetail = ({ heroId, setHeroes, user }) => {
@@ -13,6 +14,7 @@ const HeroDetail = ({ heroId, setHeroes, user }) => {
     const [gadgets, setGadgets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showUpdatePopup, setShowUpdatePopup] = useState(false);
 
     useEffect(() => {
         const getHero = async () => {
@@ -54,7 +56,13 @@ const HeroDetail = ({ heroId, setHeroes, user }) => {
     const team = getEntityById(hero.team_id, teams);
     const vehicle = getEntityById(hero.vehicle_id, vehicles);
 
-    console.log("Hero:", hero);
+    const openUpdatePopup = () => {
+        setShowUpdatePopup(true);
+    };
+
+    const closeUpdatePopup = () => {
+        setShowUpdatePopup(false);
+    };
 
     return (
         <div className="hero-detail">
@@ -119,7 +127,19 @@ const HeroDetail = ({ heroId, setHeroes, user }) => {
                 <strong>Crée par :</strong> {hero.user?.firstname + " " + hero.user?.lastname}
             </div>
             {hero.user?.id === user.id && (
-                <DeleteHero heroId={hero.id} setHeroes={setHeroes} className="delete-button" />
+                    <div className="button-group">
+                        <button onClick={openUpdatePopup} className="update-button">Mettre à jour</button>
+                        <DeleteHero heroId={hero.id} setHeroes={setHeroes} className="delete-button" />
+                    </div>
+                )}
+
+            {showUpdatePopup && (
+                <div className="popup-overlay">
+                    <div className="popup">
+                        <button onClick={closeUpdatePopup} className="close-button">X</button>
+                        <UpdateHero heroId={hero.id} setHeroes={setHeroes} />
+                    </div>
+                </div>
             )}
         </div>
     );

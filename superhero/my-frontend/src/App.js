@@ -109,43 +109,57 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
     const groupHeroesByFilter = (heroes, filterType) => {
         const heroesArray = Object.values(heroes).flat();
         return heroesArray.reduce((acc, hero) => {
-            let key = "Inconnu";
-            if (filterType === "planète") key = hero.planet?.name || "Inconnu";
-            if (filterType === "pouvoir") key = hero.superpowers?.map(p => p.name).join(", ") || "Pas de pouvoir";
-            if (filterType === "équipe") key = hero.team?.name || "Pas d'équipe";
-            if (filterType === "ville") key = hero.city?.name || "Inconnu";
-            if (filterType === "sexe") key = hero.gender || "Inconnu";
-            if (filterType === "gadget") key = hero.gadgets?.map(g => g.name).join(", ") || "Pas de gadget";
-            if (filterType === "utilisateur") key = `${hero.user?.firstname || ''} ${hero.user?.lastname || ''}`.trim() || "Inconnu";
-            if (!acc[key]) acc[key] = [];
-            acc[key].push(hero);
+            let keys = ["Inconnu"];
+            if (filterType === "planète") keys = [hero.planet?.name || "Inconnu"];
+            if (filterType === "pouvoir") keys = hero.superpowers?.map(p => p.name) || ["Pas de pouvoir"];
+            if (filterType === "équipe") keys = [hero.team?.name || "Pas d'équipe"];
+            if (filterType === "ville") keys = [hero.city?.name || "Inconnu"];
+            if (filterType === "sexe") keys = [hero.gender || "Inconnu"];
+            if (filterType === "gadget") keys = hero.gadgets?.map(g => g.name) || ["Pas de gadget"];
+            if (filterType === "utilisateur") keys = [`${hero.user?.firstname || ''} ${hero.user?.lastname || ''}`.trim() || "Inconnu"];
+    
+            keys.forEach(key => {
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(hero);
+            });
+    
             return acc;
         }, {});
     };
-
+    
     const isFilterActive = Object.values(filters).some(value => value !== '');
     const groupedHeroes = isFilterActive 
-    ? groupHeroesByFilter(heroes, filters.groupBy ) 
-    : { "Tous vos héros": heroes };
-
-    const getDescription = (category) => {
-        if (groupedHeroes[category].length > 0) {
-            const hero = groupedHeroes[category][0];
-            switch (filters.groupBy) {
-                case "planète":
-                    return hero?.planet?.description || "";
-                case "pouvoir":
-                    return hero?.superpowers?.map(p => p.description).join(", ") || "";
-                case "équipe":
-                    return hero?.team?.description || "";
-                case "gadget":
-                    return hero?.gadgets?.map(g => g.description).join(", ") || "";
-                default:
-                    return "";
+        ? groupHeroesByFilter(heroes, filters.groupBy) 
+        : { "Tous vos héros": heroes };
+    
+        const getDescription = (category) => {
+            if (groupedHeroes[category].length > 0) {
+                const hero = groupedHeroes[category][0];
+                switch (filters.groupBy) {
+                    case "planète":
+                        return hero?.planet?.description || "";
+                    case "pouvoir":
+                        return hero.superpowers
+                            ?.filter(p => p.name === category) 
+                            .map(p => p.description)
+                            .join(", ") || "Pas de description";
+                    case "équipe":
+                        return hero.team?.description || "";
+                    case "ville":
+                        return hero.city?.description || "";
+                    case "gadget":
+                        return hero.gadgets
+                            ?.filter(g => g.name === category) 
+                            .map(g => g.description)
+                            .join(", ") || "Pas de description";
+                    case "utilisateur":
+                        return `${hero.user?.firstname || ''} ${hero.user?.lastname || ''}`.trim() || "";
+                    default:
+                        return "";
+                }
             }
-        }
-        return "";
-    };
+            return "";
+        };
 
     return (
         <div className="container">
