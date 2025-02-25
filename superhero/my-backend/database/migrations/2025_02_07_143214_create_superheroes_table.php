@@ -15,6 +15,7 @@ class CreateSuperheroesTable extends Migration
             $table->string('hero_name')->unique();
             $table->string('gender');
             $table->text('description');
+            $table->string('photo')->nullable(); 
             $table->foreignId('planet_id')->constrained('planets');
             $table->foreignId('city_id')->constrained('cities');
 

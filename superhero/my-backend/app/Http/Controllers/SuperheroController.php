@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Superhero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\SuperheroSuperpower;
 use App\Models\SuperheroGadget;
 
@@ -35,8 +36,6 @@ class SuperheroController extends Controller
         }
 
         return response()->json($superheroes);
-
-
     }
 
     public function store(Request $request)
@@ -48,16 +47,16 @@ class SuperheroController extends Controller
             'description' => 'required|string',
             'planet_id' => 'required|exists:planets,id',
             'city_id' => 'required|exists:cities,id',
-            'team_id' => 'nullable|exists:teams,id',  
-            'vehicle_id' => 'nullable|exists:vehicles,id', 
-            'superpowers' => 'nullable|array', 
-            'superpowers.*' => 'exists:superpowers,id',  
-            'gadgets' => 'nullable|array', 
-            'gadgets.*' => 'exists:gadgets,id', 
+            'team_id' => 'nullable|exists:teams,id',
+            'vehicle_id' => 'nullable|exists:vehicles,id',
+            'superpowers' => 'nullable|array',
+            'superpowers.*' => 'exists:superpowers,id',
+            'gadgets' => 'nullable|array',
+            'gadgets.*' => 'exists:gadgets,id',
+            'photo' => 'sometimes|image|max:2048',
         ]);
-        
 
-        $superhero = Superhero::create([
+        $superheroData = [
             'real_name' => $validated['real_name'],
             'hero_name' => $validated['hero_name'],
             'gender' => $validated['gender'],
@@ -67,7 +66,14 @@ class SuperheroController extends Controller
             'team_id' => $validated['team_id'],
             'vehicle_id' => $validated['vehicle_id'],
             'user_id' => auth()->id(),
-        ]);
+        ];
+
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('superHeroImages', 'public');
+            $superheroData['photo'] = $path;
+        }
+
+        $superhero = Superhero::create($superheroData);
 
         if (isset($validated['superpowers']) && !empty($validated['superpowers'])) {
             $superhero->superpowers()->sync($validated['superpowers']); 
@@ -76,7 +82,6 @@ class SuperheroController extends Controller
         if (isset($validated['gadgets']) && !empty($validated['gadgets'])) {
             $superhero->gadgets()->sync($validated['gadgets']); 
         }
-        
 
         return response()->json($superhero, 201);
     }
@@ -88,12 +93,52 @@ class SuperheroController extends Controller
 
     public function update(Request $request, Superhero $superhero)
     {
-        $superhero->update($request->all());
+        $validated = $request->validate([
+            'real_name' => 'sometimes|required|string',
+            'hero_name' => 'sometimes|required|string|unique:superheroes,hero_name,' . $superhero->id,
+            'gender' => 'sometimes|required|string',
+            'description' => 'sometimes|required|string',
+            'planet_id' => 'sometimes|required|exists:planets,id',
+            'city_id' => 'sometimes|required|exists:cities,id',
+            'team_id' => 'sometimes|nullable|exists:teams,id',
+            'vehicle_id' => 'sometimes|nullable|exists:vehicles,id',
+            'superpowers' => 'sometimes|nullable|array',
+            'superpowers.*' => 'exists:superpowers,id',
+            'gadgets' => 'sometimes|nullable|array',
+            'gadgets.*' => 'exists:gadgets,id',
+            'photo' => 'sometimes|image|max:2048',
+        ]);
+
+        $superheroData = $request->except('photo');
+
+        if ($request->hasFile('photo')) {
+
+            if ($superhero->photo) {
+                Storage::disk('public')->delete($superhero->photo);
+            }
+            $path = $request->file('photo')->store('superHeroImages', 'public');
+            $superheroData['photo'] = $path;
+        }
+
+        $superhero->update($superheroData);
+
+        if (isset($validated['superpowers']) && !empty($validated['superpowers'])) {
+            $superhero->superpowers()->sync($validated['superpowers']);
+        }
+
+        if (isset($validated['gadgets']) && !empty($validated['gadgets'])) {
+            $superhero->gadgets()->sync($validated['gadgets']);
+        }
+
         return response()->json($superhero);
     }
 
     public function destroy(Superhero $superhero)
     {
+        if ($superhero->photo) {
+            Storage::disk('public')->delete($superhero->photo);
+        }
+
         $superhero->delete();
         return response()->json(null, 204);
     }
@@ -116,9 +161,12 @@ class SuperheroController extends Controller
         SuperheroGadget::where('superhero_id', $id)->delete();
 
         $superhero = Superhero::findOrFail($id);
+        if ($superhero->photo) {
+            Storage::disk('public')->delete($superhero->photo);
+        }
+
         $superhero->delete();
 
         return response()->json(['message' => 'Superhero deleted']);
     }
-
 }

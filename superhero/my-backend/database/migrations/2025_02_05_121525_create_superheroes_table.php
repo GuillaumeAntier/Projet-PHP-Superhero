@@ -13,20 +13,17 @@ return new class extends Migration
     {
         Schema::create('superhero', function (Blueprint $table) {
             $table->id();
-            $table->string('heroname');
-            $table->string('realname');
-            $table->string('sexe');
-            $table->string('planet');
-            $table->string('description');
-            $table->string('superpowers')->nullable();
-            $table->string('protectedcountry');
-            $table->string('gadjets')->nullable();
-            $table->string('team')->nullable();
-            $table->string('car')->nullable();
+            $table->string('hero_name');
+            $table->string('real_name');
+            $table->string('gender');
+            $table->text('description');
+            $table->string('photo')->nullable();
+            $table->foreignId('planet_id')->constrained()->onDelete('cascade');
+            $table->foreignId('city_id')->constrained()->onDelete('cascade');
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
+            $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->foreignId('user_id')
-            ->constrained()
-            ->onDelete('cascade');
         });
     }
 

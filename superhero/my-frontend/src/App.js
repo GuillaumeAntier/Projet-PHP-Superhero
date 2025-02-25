@@ -70,9 +70,10 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
     useEffect(() => {
         if (searchTerm.length > 0 && Array.isArray(heroes)) {
             const filtered = heroes.filter(hero =>
-                hero.hero_name.toLowerCase().startsWith(searchTerm.toLowerCase())
+                hero.hero_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (hero.real_name && hero.real_name.toLowerCase().includes(searchTerm.toLowerCase()))
             );
-            setSuggestions(filtered);
+            setSuggestions(filtered.slice(0, 5));
         } else {
             setSuggestions([]);
         }
@@ -210,7 +211,11 @@ const SuperheroesList = ({ heroes, setHeroes, user }) => {
                                 <div key={hero.id} className="hero-card">
                                     <Link to={`/hero/${hero.id}`} className="hero-link">
                                         <div className="hero-image-container">
-                                            <img src={hero.image || "/api/placeholder/300/400"} alt={hero.hero_name} className="hero-image" />
+                                            <img 
+                                                src={hero.photo ? `http://127.0.0.1:8000/storage/${hero.photo}` : "/api/placeholder/300/400"} 
+                                                alt={hero.hero_name} 
+                                                className="hero-image" 
+                                            />
                                         </div>
                                         <span className="hero-name">{hero.hero_name}</span>
                                     </Link>
